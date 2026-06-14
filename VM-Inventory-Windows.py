@@ -44,27 +44,14 @@ def _get_reg_value(key, value_name):
         return ""
 
 
-def _is_supported_windows_version():
-    try:
-        win_ver = sys.getwindowsversion()
-    except AttributeError:
-        return False
-
-    return win_ver.major == 10 and win_ver.build >= 10240
-
-
 def list_installed_software():
     if platform.system() != "Windows":
-        print("This script only runs on Windows 10 or Windows 11.", file=sys.stderr)
+        print("This script only runs on Windows.", file=sys.stderr)
         return 1
-
-    if not _is_supported_windows_version():
-        print("This script only supports Windows 10 or Windows 11.", file=sys.stderr)
-        return 2
 
     if winreg is None:
         print("The winreg module is unavailable in this Python environment.", file=sys.stderr)
-        return 3
+        return 2
 
     uninstall_roots = [
         (winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"),
